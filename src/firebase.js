@@ -31,6 +31,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
+
 const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
@@ -50,6 +51,7 @@ const signInWithGoogle = async () => {
     alert(err.message);
   }
 };
+
 const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
@@ -58,6 +60,7 @@ const logInWithEmailAndPassword = async (email, password) => {
     alert(err.message);
   }
 };
+
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -73,6 +76,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     alert(err.message);
   }
 };
+
 const sendPasswordReset = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
@@ -82,9 +86,29 @@ const sendPasswordReset = async (email) => {
     alert(err.message);
   }
 };
+
 const logout = () => {
   signOut(auth);
 };
+
+// const inventory = async (db) => {
+//   const inventory = collection(db, 'inventory');
+//   const inventorySnapshot = await getDocs(inventory);
+//   const inventoryList = inventorySnapshot.docs.map(doc => doc.data());
+//   return inventoryList;
+// };
+
+async function getInventory(db) {
+  const inventory = collection(db, "inventory");
+  const inventorySnapshot = await getDocs(inventory);
+  const inventoryList = inventorySnapshot.docs.map((doc) => doc.data());
+  return inventoryList;
+}
+
+
+// const inventory = collection(db, "inventory");
+// console.log(inventory);
+
 export {
   auth,
   db,
@@ -93,4 +117,5 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
+  getInventory,
 };
