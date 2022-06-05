@@ -8,14 +8,20 @@ import {
   sendPasswordResetEmail,
   signOut,
 } from "firebase/auth";
+import {useState} from 'react';
+import {useEffect} from 'react';
 import {
   getFirestore,
   query,
   getDocs,
   collection,
+  doc,
+  setDoc,
   where,
   addDoc,
+  updateDoc,
 } from "firebase/firestore";
+import {useNavigate} from "react-router-dom";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAVN_YnxE5pTGUEdwg2aKpl2jdM5GzsOZs",
@@ -31,6 +37,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
+
 
 const signInWithGoogle = async () => {
   try {
@@ -105,6 +112,29 @@ async function getInventory(db) {
   return inventoryList;
 }
 
+// function getUserId() {
+//   const [uid, setUid] = useState(null);
+//   useEffect(() => {
+//     auth.onAuthStateChanged(user => {
+//       if(user) {
+//         setUid(user.uid);
+//       }
+//     });
+//   }, []);
+//   return uid;
+// }
+
+async function addToCart(item, uid) {
+  const ordersRef = doc(collection(db, "ordersList"));
+  setDoc(ordersRef, {
+    id: item.id,
+    title: item.title,
+    count: 1,
+    image: item.image,
+    price: item.price,
+    user: uid
+  });
+};
 
 // const inventory = collection(db, "inventory");
 // console.log(inventory);
@@ -118,4 +148,5 @@ export {
   sendPasswordReset,
   logout,
   getInventory,
+  addToCart,
 };

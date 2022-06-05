@@ -7,8 +7,9 @@ import About from './components/about';
 import Home from './components/home';
 import Contact from './components/contact';
 import Cart from './components/cart';
-import Register from './components/register';
 import Dashboard from './components/dashboard';
+import ItemDetails from './components/common/itemDetails';
+import Register from './components/register';
 import Reset from "./components/common/reset";
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
         <main className="container">
           <Routes>
             <Route path="/home" element={<Home />}></Route>
+            <Route path="/home/:id" element={<ItemDetails />}></Route>
             <Route path="/about" element={<About />}></Route>
             <Route path="/contact" element={<Contact />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
