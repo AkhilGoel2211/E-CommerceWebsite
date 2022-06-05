@@ -6,17 +6,19 @@ import {
   registerWithEmailAndPassword,
   signInWithGoogle,
 } from "../../firebase";
+import {addMoney} from "../../firebase";
 import {Button} from "@mui/material";
 
 function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [money, setMoney] = useState(0);
   const [user, loading, error] = useAuthState(auth);
   const history = useNavigate();
   const register = () => {
     if(!name) alert("Please enter name");
-    registerWithEmailAndPassword(name, email, password);
+    registerWithEmailAndPassword(name, email, password, money);
   };
   useEffect(() => {
     if(loading) return;
@@ -55,10 +57,15 @@ function SignupForm() {
         >
           Register with Google
         </Button>
-        <div>
-          Already have an account? <Link to="/">Login</Link> now.
-        </div>
       </div>
+      <div>Enter the amount of money you want to start with:</div>
+      <input
+        type="number"
+        className="money__textBox"
+        value={money}
+        onChange={(e) => setMoney(e.target.value)}
+        placeholder="Money"
+      />
     </div>
   );
 }
