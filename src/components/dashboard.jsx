@@ -27,14 +27,32 @@ function Dashboard() {
     if(!user) return navigate("/");
     fetchUserName();
   }, [user, loading]);
+
+  const goHome = () => {
+    navigate("/home");
+  };
+
   return (
     <div style={{padding: "20px"}}>
+      <Button
+        variant="contained"
+        onClick={() => {
+          goHome();
+        }}
+      >
+        Go Home
+      </Button>
       <div style={{color: "dodgerblue"}}>
+        <br />
+        <br />
         <h1>Logged in as</h1>
-        <h1>Name: {name}</h1>
-        <h1>Email: {user?.email}</h1>
-        <h1>Balance: ${money}</h1>
-        <Button variant="contained" onClick={logout}>Logout</Button>
+        <h2>Name: {name}</h2>
+        <h2>Email: {user?.email}</h2>
+        <h2>Balance: ${money}</h2>
+        <Button variant="contained" onClick={logout}>
+          Logout
+        </Button>
+        <br />
       </div>
     </div>
   );

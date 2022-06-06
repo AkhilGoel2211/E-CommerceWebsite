@@ -22,7 +22,6 @@ import {
   addDoc,
   updateDoc,
   increment,
-  deleteField,
   getDoc,
 } from "firebase/firestore";
 // import {useNavigate} from "react-router-dom";
@@ -75,7 +74,7 @@ const registerWithEmailAndPassword = async (name, email, password, money) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    await addDoc(collection(db, "users"), {
+    await setDoc(doc(db, "users", `${user.uid}`), {
       uid: user.uid,
       name,
       authProvider: "local",
@@ -145,7 +144,6 @@ async function getCartList(db) {
 // }
 
 async function addToCart(item, uid) {
-
   // const inventoryItemRef = doc(collection(db, "inventory", item.id));
   // console.log(inventoryItemRef);
   // updateDoc(inventoryItemRef, {
@@ -175,7 +173,6 @@ async function addToCart(item, uid) {
       count: increment(1),
     });
   } else {
-    console.log("hello");
     await setDoc(doc(db, "cartList", `${item.id + uid}`), {
       id: item.id,
       title: item.title,
@@ -221,7 +218,31 @@ async function addMoney(money) {
 }
 
 async function orderConfirmed(cart, price, uid) {
-
+  const ordersRef = doc(collection(db, "ordersList"));
+  await setDoc(ordersRef, {
+    cart: cart,
+    uid: uid,
+    orderTotal: price,
+  });
+  for(let i = 1; i <= 20; i++) {
+    const cartItemRef = doc(db, "cartList", `${i + uid}`);
+    if(cartItemRef !== null) {
+      console.log(i);
+      // await deleteDoc(doc(db, "cartList", `${i + uid}`));
+      await deleteDoc(cartItemRef);
+    }
+  }
+  const userRef = doc(db, "users", `${uid}`);
+  await updateDoc(userRef, {
+    money: increment(-(price)),
+  });
+  // const cartList = query(collection(db, "cartList"), where("user", "==", uid));
+  // console.log(cartList);
+  // const cartItems = await getDocs(cartList);
+  // console.log(cartItems);
+  // cartItems.forEach((doc) => {
+  //   doc.delete();
+  // });
 }
 
 // const inventory = collection(db, "inventory");
@@ -242,4 +263,5 @@ export {
   addMoney,
   removeFromCart,
   orderConfirmed,
+  getUserId,
 };

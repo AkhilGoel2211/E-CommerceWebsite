@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <NavBar />
-        <body>
+        <div>
           <Routes>
             <Route path="/home" element={<Home />}></Route>
             <Route path="/home/:id" element={<ItemDetails />}></Route>
@@ -33,7 +33,7 @@ class App extends Component {
             <Route path="/" element={<Navigate to="/home" replace />}></Route>
             <Route element={<Navigate to="/not-found" replace />}></Route>
           </Routes>
-        </body>
+        </div>
       </React.Fragment>
     );
   }

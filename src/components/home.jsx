@@ -97,9 +97,16 @@ function Home() {
   return (
     <React.Fragment>
       <center>
-        <h1 style={{color: "dodgerblue"}}>Inventory - Happy Shopping</h1>
+        <h1 style={{color: "dodgerblue", margin: "20px 0"}}>Inventory - Happy Shopping</h1>
       </center>
-      <div style={{display: "flex", flexWrap: "wrap", width: "100%", padding: "20px 15px"}}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          width: "100%",
+          padding: "20px 15px",
+        }}
+      >
         {inventory.map((item) => (
           <Box
             sx={{

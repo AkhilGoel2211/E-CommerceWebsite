@@ -70,6 +70,8 @@ function Cart() {
   const handleBuy = (cart) => {
     orderConfirmed(cart, totalPrice, uid);
     nav("/order-confirmed");
+    const emptyCart = {};
+    setCart(emptyCart);
   };
 
   return (
@@ -92,7 +94,6 @@ function Cart() {
           <Box
             sx={{
               backgroundColor: "lightgray",
-              flexGrow: 1,
             }}
             key={item.id}
             style={{
