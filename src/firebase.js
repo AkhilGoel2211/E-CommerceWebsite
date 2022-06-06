@@ -41,7 +41,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
-const signInWithGoogle = async () => {
+const signInWithGoogle = async (money) => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
@@ -53,6 +53,7 @@ const signInWithGoogle = async () => {
         name: user.displayName,
         authProvider: "google",
         email: user.email,
+        money: Number(money),
       });
     }
   } catch(err) {

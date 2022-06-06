@@ -77,7 +77,7 @@ function SignupForm() {
         <Button
           style={{margin: "10px"}}
           variant="contained"
-          onClick={signInWithGoogle}
+          onClick={() => signInWithGoogle(money)}
         >
           Register with Google
         </Button>
