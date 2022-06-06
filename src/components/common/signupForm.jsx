@@ -66,6 +66,21 @@ function SignupForm() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
+        <InputLabel>
+          Enter the amount of money you want to start with:
+        </InputLabel>
+        <br />
+        <TextField
+          id="outlined-basic"
+          label="Starting Balance"
+          variant="outlined"
+          type="text"
+          value={money}
+          onChange={(e) => setMoney(e.target.value)}
+          placeholder="Money"
+        />
+        <br />
+        <br />
         <Button
           style={{margin: "10px"}}
           variant="contained"
@@ -82,18 +97,6 @@ function SignupForm() {
           Register with Google
         </Button>
       </div>
-      <br />
-      <InputLabel>Enter the amount of money you want to start with:</InputLabel>
-      <br />
-      <TextField
-        id="outlined-basic"
-        label="Starting Balance"
-        variant="outlined"
-        type="text"
-        value={money}
-        onChange={(e) => setMoney(e.target.value)}
-        placeholder="Money"
-      />
     </center>
   );
 }
