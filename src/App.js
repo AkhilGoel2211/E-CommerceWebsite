@@ -30,6 +30,7 @@ class App extends Component {
             <Route path="/order-confirmed" element={<OrderConfirmed />}></Route>
             <Route path="/login" element={<Register />}></Route>
             <Route path="/not-found" element={<NotFound />}></Route>
+            <Route path="/E-CommerceWebsite" element={<Navigate to="/home" replace />}></Route>
             <Route path="/" element={<Navigate to="/home" replace />}></Route>
             <Route element={<Navigate to="/not-found" replace />}></Route>
           </Routes>

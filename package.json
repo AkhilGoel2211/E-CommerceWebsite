@@ -1,7 +1,7 @@
 {
   "name": "ecommerce-website",
   "version": "0.1.0",
-  "homepage": "https://akhilgoel2211.github.io/home/",
+  "homepage": "https://akhilgoel2211.github.io/E-CommerceWebsite/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
