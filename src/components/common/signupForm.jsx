@@ -8,12 +8,14 @@ import {
 } from "../../firebase";
 import {addMoney} from "../../firebase";
 import {Button} from "@mui/material";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
 
 function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [money, setMoney] = useState(0);
+  const [money, setMoney] = useState();
   const [user, loading, error] = useAuthState(auth);
   const history = useNavigate();
   const register = () => {
@@ -25,48 +27,74 @@ function SignupForm() {
     if(user) history("/dashboard");
   }, [user, loading]);
   return (
-    <div className="register">
-      <div className="register__container">
-        <input
+    <center
+      style={{
+        padding: "20px",
+        margin: "30px 200px",
+        border: "1px solid gray",
+      }}
+    >
+      <h1>Sign Up</h1>
+      <div>
+        <TextField
+          id="outlined-basic"
+          label="Full Name"
+          variant="outlined"
           type="text"
-          className="register__textBox"
           value={name}
+          style={{margin: "10px"}}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Full Name"
         />
-        <input
+        <br />
+        <TextField
+          id="outlined-basic"
+          label="E-mail Address"
+          variant="outlined"
           type="text"
-          className="register__textBox"
           value={email}
+          style={{margin: "10px"}}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="E-mail Address"
         />
-        <input
+        <br />
+        <TextField
+          id="outlined-basic"
+          label="Password"
+          variant="outlined"
           type="password"
-          className="register__textBox"
           value={password}
+          style={{margin: "10px"}}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
         />
-        <Button className="register__btn" onClick={register}>
+        <br />
+        <Button
+          style={{margin: "10px"}}
+          variant="contained"
+          onClick={register}
+        >
           Register
         </Button>
+        <br />
         <Button
-          className="register__btn register__google"
+          style={{margin: "10px"}}
+          variant="contained"
           onClick={signInWithGoogle}
         >
           Register with Google
         </Button>
       </div>
-      <div>Enter the amount of money you want to start with:</div>
-      <input
-        type="number"
-        className="money__textBox"
+      <br />
+      <InputLabel>Enter the amount of money you want to start with:</InputLabel>
+      <br />
+      <TextField
+        id="outlined-basic"
+        label="Starting Balance"
+        variant="outlined"
+        type="text"
         value={money}
         onChange={(e) => setMoney(e.target.value)}
         placeholder="Money"
       />
-    </div>
+    </center>
   );
 }
 export default SignupForm;

@@ -1,11 +1,22 @@
 import React, {Component, useState, useEffect} from "react";
-import {db, auth, logout, getInventory, addToCart, favouriteItem} from "../firebase";
+import {
+  db,
+  auth,
+  logout,
+  getInventory,
+  addToCart,
+  favouriteItem,
+} from "../firebase";
 import {useNavigate} from "react-router-dom";
 import {getAuth} from "firebase/auth";
 
-import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+
 // import {useNavigate} from "react-router-dom";
 // import {
 //   collection,
@@ -37,7 +48,6 @@ function Home() {
 
   const getItem = (id) => {
     return inventory.find((item) => item.id === id);
-
   };
 
   const handleFavourite = (item) => {
@@ -47,8 +57,7 @@ function Home() {
     if(user) {
       uid = user.uid;
       favouriteItem(item, uid);
-    }
-    else {
+    } else {
       nav("/login");
     }
   };
@@ -60,8 +69,7 @@ function Home() {
     if(user) {
       uid = user.uid;
       addToCart(item, uid);
-    }
-    else {
+    } else {
       nav("/login");
     }
   };
@@ -71,7 +79,7 @@ function Home() {
   };
 
   const handleClose = (event, reason) => {
-    if(reason === 'clickaway') {
+    if(reason === "clickaway") {
       return;
     }
 
@@ -79,7 +87,7 @@ function Home() {
   };
 
   const handleItemDisplay = (id) => {
-    nav(`/home/${id}`, {state: {item: (getItem(id))}});
+    nav(`/home/${id}`, {state: {item: getItem(id)}});
   };
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -87,40 +95,94 @@ function Home() {
   });
 
   return (
-    <div className="container" style={{width: "50%", height: "auto"}}>
-      <h1>Home</h1>
-      {inventory.map((item) => (
-        <ul
-          key={item.id}
-          style={{border: "2px solid black"}}
-        // onClick={() => {
-        //   getItem(item.id);
-        //   handleItemDisplay(item.id);
-        // }
-        // }
-        >
-          <li>Title: {item.title}</li>
-          <li>Category: {item.category}</li>
-          <img
-            style={{width: "auto", height: "200px", border: "1px solid black", borderRadius: "30px"}}
-            src={item.image}
-            alt=""
-          />
-          <li>Description: {item.description}</li>
-          <li>Price: ${item.price}</li>
-          <li>Rating: {item.rating}</li>
-          <li>Count: {item.count}</li>
-          <Button onClick={() => {handleAddToCart(item); handleAlert();}}>Add to Cart</Button>
-          <Button onClick={() => {handleFavourite(item); handleAlert();}}>Like</Button>
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
-              Success!
-            </Alert>
-          </Snackbar>
-        </ul>
-      ))
-      }
-    </div >
+    <React.Fragment>
+      <center>
+        <h1 style={{color: "dodgerblue"}}>Inventory - Happy Shopping</h1>
+      </center>
+      <div style={{display: "flex", flexWrap: "wrap", width: "100%", padding: "20px 15px"}}>
+        {inventory.map((item) => (
+          <Box
+            sx={{
+              backgroundColor: "lightgray",
+              flexGrow: 1,
+            }}
+            key={item.id}
+            style={{
+              border: "1px solid gray",
+              width: "48%",
+              margin: "10px",
+              borderRadius: "30px",
+              padding: "10px",
+              boxShadow:
+                "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+            }}
+          // onClick={() => {
+          //   getItem(item.id);
+          //   handleItemDisplay(item.id);
+          // }
+          // }
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={7}>
+                <h2>{item.title}</h2>
+                <p>Category: {item.category}</p>
+                <p>Description: {item.description}</p>
+                <p>Price: ${item.price}</p>
+                <p>Rating: {item.rating}</p>
+                <p>Count: {item.count}</p>
+              </Grid>
+              <Grid item xs={5}>
+                <img
+                  style={{
+                    width: "250px",
+                    height: "auto",
+                    border: "1px solid gray",
+                    borderRadius: "30px",
+                  }}
+                  src={item.image}
+                  alt=""
+                />
+              </Grid>
+            </Grid>
+            <Stack
+              direction="row"
+              spacing={2}
+              justifyContent="center"
+              marginBottom={"10px"}
+            >
+              <Button
+                label={'margin="normal"'}
+                variant="contained"
+                onClick={() => {
+                  handleAddToCart(item);
+                  handleAlert();
+                }}
+              >
+                Add to Cart
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  handleFavourite(item);
+                  handleAlert();
+                }}
+              >
+                Like
+              </Button>
+            </Stack>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert
+                onClose={handleClose}
+                severity="success"
+                sx={{width: "100%"}}
+              >
+                Success!
+              </Alert>
+            </Snackbar>
+          </Box>
+        ))}
+      </div>
+    </React.Fragment>
   );
 }
 

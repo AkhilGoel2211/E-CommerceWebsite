@@ -1,35 +1,59 @@
 import React, {Component} from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 class Contact extends Component {
   render() {
     return (
-      <React.Fragment>
+      <div style={{padding: "20px"}}>
         <center>
           <h1>Contact</h1>
         </center>
         <br />
         <h3>You can Reach us directly at customercare@shopstop.com</h3>
         <center>
-          <br />
           <h2>or</h2>
-          <br />
         </center>
         <h3>
           Enter your Questions here and we will connect you with our customer
           support
         </h3>
-        <h4>Name</h4>
-        <input type="text" />
-        <h4>Email</h4>
-        <input type="email" />
+        <br />
+        <div style={{display: "flex"}}>
+          <div style={{marginRight: "30px"}}>
+            <h4>Name</h4>
+            <TextField
+              id="outlined-basic"
+              label="Full Name"
+              variant="outlined"
+              type="text"
+            />
+          </div>
+          <div>
+            <h4>Email</h4>
+            <TextField
+              id="outlined-basic"
+              label="Email"
+              variant="outlined"
+              type="email"
+            />
+          </div>
+        </div>
+        <br />
         <h4>Description</h4>
-        <textarea
+        <TextField
+          id="outlined-basic"
+          label="Description"
+          variant="outlined"
+          height="200px"
+          fullWidth="true"
           type="text"
-          placeholder="Enter your Grieviences"
-          style={{width: "100%", height: "200px"}}
         />
-        <button>Submit</button>
-      </React.Fragment>
+        <br />
+        <br />
+        <Button variant="contained">Submit</Button>
+      </div>
     );
   }
 }

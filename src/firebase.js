@@ -205,8 +205,7 @@ async function removeFromCart(item, uid) {
 }
 
 async function favouriteItem(item, uid) {
-  const favouriteRef = doc(collection(db, "favourite"));
-  await setDoc(favouriteRef, {
+  await setDoc(doc(db, "favourite", `favourite${item.id + uid}`), {
     id: item.id,
     title: item.title,
     favourite: true,

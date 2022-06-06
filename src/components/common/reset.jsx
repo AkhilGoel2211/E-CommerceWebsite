@@ -3,6 +3,10 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {useNavigate} from "react-router-dom";
 import {Link} from "react-router-dom";
 import {auth, sendPasswordReset} from "../../firebase";
+import {Button} from "@mui/material";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+
 function Reset() {
   const [email, setEmail] = useState("");
   const [user, loading, error] = useAuthState(auth);
@@ -12,26 +16,34 @@ function Reset() {
     if(user) navigate("/dashboard");
   }, [user, loading]);
   return (
-    <div className="reset">
-      <div className="reset__container">
-        <input
+    <center
+      style={{
+        padding: "20px",
+        margin: "30px 200px",
+      }}
+    >
+      <h1>Reset</h1>
+      <div>
+        <TextField
+          id="outlined-basic"
+          label="E-mail Address"
+          variant="outlined"
           type="text"
-          className="reset__textBox"
           value={email}
+          style={{margin: "10px"}}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="E-mail Address"
         />
-        <button
-          className="reset__btn"
-          onClick={() => sendPasswordReset(email)}
-        >
+        <br />
+        <Button variant="contained" onClick={() => sendPasswordReset(email)}>
           Send password reset email
-        </button>
-        <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
-        </div>
+        </Button>
+        <br />
+        <br />
+        <InputLabel>
+          Don't have an account? <Link to="/login">Register</Link> now.
+        </InputLabel>
       </div>
-    </div>
+    </center>
   );
 }
 export default Reset;
