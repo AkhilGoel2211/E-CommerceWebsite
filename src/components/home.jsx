@@ -107,11 +107,11 @@ function Home() {
             alt=""
           />
           <li>Description: {item.description}</li>
-          <li>Price: {item.price}</li>
+          <li>Price: ${item.price}</li>
           <li>Rating: {item.rating}</li>
           <li>Count: {item.count}</li>
           <Button onClick={() => {handleAddToCart(item); handleAlert();}}>Add to Cart</Button>
-          <Button onClick={() => {handleFavourite(item);}}>Like</Button>
+          <Button onClick={() => {handleFavourite(item); handleAlert();}}>Like</Button>
           <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
               Success!

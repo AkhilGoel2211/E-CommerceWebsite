@@ -23,6 +23,7 @@ import {
   updateDoc,
   increment,
   deleteField,
+  getDoc,
 } from "firebase/firestore";
 // import {useNavigate} from "react-router-dom";
 
@@ -143,52 +144,64 @@ async function getCartList(db) {
 //   return uid;
 // }
 
-// async function addToCart(item, uid) {
-
-//   const inventoryItemRef = doc(collection(db, "inventory", item.id));
-//   updateDoc(inventoryItemRef, {
-//     count: increment(-1),
-//   });
-
-//   const cartRef = doc(collection(db, "cartList"));
-//   if(query(collection(db, "cartList"), where("id", "==", item.id))) {
-//     updateDoc(cartRef, item.id, {
-//       count: increment(1),
-//     });
-//   } else {
-//     setDoc(cartRef, {
-//       id: item.id,
-//       title: item.title,
-//       count: 1,
-//       image: item.image,
-//       price: item.price,
-//       user: uid,
-//     });
-//   }
-// }
-
 async function addToCart(item, uid) {
-  const cartRef = doc(collection(db, "cartList"));
-  await setDoc(cartRef, {
-    id: item.id,
-    title: item.title,
-    count: 1,
-    image: item.image,
-    price: item.price,
-    user: uid,
-  });
+
+  // const inventoryItemRef = doc(collection(db, "inventory", item.id));
+  // console.log(inventoryItemRef);
+  // updateDoc(inventoryItemRef, {
+  //   count: increment(-1),
+  // });
+
+  // const cartRef = doc(db, "cartList", "Dc33w0kWs5T1axoEY7fd");
+  // console.log(cartRef, "DOC CALLED");
+  // const potential_items = query(collection(db, "cartList"), where("id", "==", item.id));
+  // console.log(potential_items);
+  // for(var key in potential_items) {
+  //   console.log(key);
+  // }
+  // console.log(potential_items[0]);
+  // await updateDoc(potential_items[0], {
+  //   count: increment(1)
+  // });
+
+  // if(potential_items != null) {
+
+  // }
+
+  const cartRef = doc(db, "cartList", `${item.id + uid}`);
+  const docSnap = await getDoc(cartRef);
+  if(docSnap.exists()) {
+    updateDoc(cartRef, {
+      count: increment(1),
+    });
+  } else {
+    console.log("hello");
+    await setDoc(doc(db, "cartList", `${item.id + uid}`), {
+      id: item.id,
+      title: item.title,
+      count: 1,
+      image: item.image,
+      price: item.price,
+      user: uid,
+    });
+  }
 }
 
+// async function addToCart(item, uid) {
+//   const cartRef = collection(db, "cartList");
+//   await setDoc(doc(cartRef, `${item.id + uid}`), {
+//     id: item.id,
+//     title: item.title,
+//     count: 1,
+//     image: item.image,
+//     price: item.price,
+//     user: uid,
+//   });
+// }
+
 async function removeFromCart(item, uid) {
-  const cartRef = doc(collection(db, "cartList", item.id()));
-  await updateDoc(cartRef, {
-    id: deleteField(),
-    title: deleteField(),
-    count: deleteField(),
-    image: deleteField(),
-    price: deleteField(),
-    user: deleteField(),
-  });
+  const cartRef = doc(db, "cartList", `${item.id + uid}`);
+  await deleteDoc(cartRef);
 }
 
 async function favouriteItem(item, uid) {
@@ -208,6 +221,10 @@ async function addMoney(money) {
   });
 }
 
+async function orderConfirmed(cart, price, uid) {
+
+}
+
 // const inventory = collection(db, "inventory");
 // console.log(inventory);
 
@@ -225,4 +242,5 @@ export {
   favouriteItem,
   addMoney,
   removeFromCart,
+  orderConfirmed,
 };

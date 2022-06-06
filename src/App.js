@@ -11,6 +11,7 @@ import Dashboard from './components/dashboard';
 import ItemDetails from './components/common/itemDetails';
 import Register from './components/register';
 import Reset from "./components/common/reset";
+import OrderConfirmed from "./components/orderConfirmation";
 
 class App extends Component {
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/reset" element={<Reset />}></Route>
             <Route path="/dashboard" element={<Dashboard />}></Route>
+            <Route path="/order-confirmed" element={<OrderConfirmed />}></Route>
             <Route path="/login" element={<Register />}></Route>
             <Route path="/not-found" element={<NotFound />}></Route>
             <Route path="/" element={<Navigate to="/home" replace />}></Route>

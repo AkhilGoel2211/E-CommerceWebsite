@@ -7,12 +7,14 @@ import {
   QuerySnapshot,
 } from "firebase/firestore";
 import {getAuth} from "firebase/auth";
-import {db, getCartList, removeFromCart} from "../firebase";
+import {db, getCartList, removeFromCart, orderConfirmed} from "../firebase";
 import Button from '@mui/material/Button';
+import {useNavigate} from "react-router-dom";
 
 function Cart() {
   const [cart, setCart] = useState([]);
   const [uid, setUid] = useState();
+  const nav = useNavigate();
   const fetchCarts = async () => {
     try {
       const promise = getCartList(db);
@@ -57,7 +59,12 @@ function Cart() {
   });
 
   const handleRemoveFromCart = (item) => {
-    removeFromCart(item, uid);
+    removeFromCart(item, uid, cart);
+  };
+
+  const handleBuy = (cart) => {
+    orderConfirmed(cart, totalPrice, uid);
+    nav("/order-confirmed");
   };
 
   return (
@@ -65,8 +72,8 @@ function Cart() {
       <h1>Cart</h1>
       <center>
         <h1>Total Order Price:</h1>
-        <h2>{totalPrice}</h2>
-        <Button onclick>Proceed to Buy</Button>
+        <h2>${totalPrice}</h2>
+        <Button onClick={() => {handleBuy(cart);}}>Proceed to Buy</Button>
       </center>
       {cart.map((item) => (
         <ul key={item.id} style={{border: "2px solid black"}}>
@@ -81,7 +88,7 @@ function Cart() {
             src={item.image}
             alt=""
           />
-          <li>Price: {item.price}</li>
+          <li>Price: ${item.price}</li>
           <li>Count: {item.count}</li>
           <Button onClick={() => {handleRemoveFromCart(item);}}>Remove from Cart</Button>
         </ul>

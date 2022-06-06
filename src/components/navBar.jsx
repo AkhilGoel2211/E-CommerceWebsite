@@ -54,6 +54,11 @@ class NavBar extends Component {
           </ul>
           <ul className="navbar-nav d-flex align-items-center">
             <li className="nav-item">
+              <div className="nav-link">
+                Money
+              </div>
+            </li>
+            <li className="nav-item">
               <NavLink className="nav-link" to="/dashboard">
                 Dashboard
               </NavLink>
